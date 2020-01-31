@@ -14,35 +14,33 @@ function showPage(list, page) {
    let currentPage = (page * resultsPerPage);
    for (let i = 0; i < list.length; i++) {
       if (i >= currentPage - resultsPerPage && i < currentPage) {
-         list[i].style.backgroundColor = 'skyblue';
+         // list[i].style.backgroundColor = 'skyblue';
          list[i].style.display = '';
       } else {
-         list[i].style.backgroundColor = 'yellow';
+         // list[i].style.backgroundColor = 'yellow';
          list[i].style.display = 'none';
       }
    }
 }
 
-
 function appendPageLinks(studentList) {
    const page = document.querySelector('.page');
-   const paginationDiv = document.createElement('div');
-   paginationDiv.className = 'pagination';
-   page.appendChild(paginationDiv);
-   const paginationUl = document.createElement('ul');
-   paginationDiv.appendChild(paginationUl);
+   const div = document.createElement('div');
+   div.className = 'pagination';
+   page.appendChild(div);
+   const ul = document.createElement('ul');
+   div.appendChild(ul);
 
    for (let i = 1; i <= numOfPages; i++) {
-      const list = document.createElement('li');
-      const listLink = document.createElement('a');
-      listLink.href = '#';
-      listLink.textContent = i;
-      list.appendChild(listLink);
-      paginationUl.appendChild(list);
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = i;
+      li.appendChild(a);
+      ul.appendChild(li);
 
-      listLink.addEventListener('click', (e) => {
+      a.addEventListener('click', (e) => {
          const page = e.target.textContent;
-         // console.log('clicked the button ' + listLink.textContent);
          const allActive = document.getElementsByClassName('active');
          for (let i = 0; i < allActive.length; i++) {
             allActive[i].className = '';
@@ -53,7 +51,7 @@ function appendPageLinks(studentList) {
    }
 
    //Getting all the generated List > a items and setting first link class to 'active'
-   const listItems = paginationUl.querySelectorAll('li a')[0];
+   const listItems = ul.querySelectorAll('li a')[0];
    listItems.className = 'active';
 }
 
