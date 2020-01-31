@@ -6,13 +6,30 @@ FSJS project 2 - List Filter and Pagination
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 const studentList = document.querySelectorAll('ul li');
+let searchArr = [];
 const resultsPerPage = 10; //results per page, we can change it any time to display different results
 const totalStudents = studentList.length; // total students
 const numOfPages = Math.ceil(totalStudents / resultsPerPage); //total number of pages it will generate
 
-function showPage(list, page) {
+const page = document.querySelector('.page');
+const headDiv = page.firstElementChild;
+
+
+const showPage = (list, page) => {
    let currentPage = (page * resultsPerPage);
    for (let i = 0; i < list.length; i++) {
+
+      /*
+      here if currentPage is page * results ( 5 * 10 = 50)
+      so currentPage - resultsPerPage (50 -10 = 40)
+      it will start from >=40 and end <50 (0 index is on new page always)
+      for Example: 
+      0 >= (1 * 10) - 10 && 0 < 1 * 10
+      set display to empty and it will show on page.
+      page 2: 
+      (2 * 10) - 10 = 10 start && < 20 end
+      */
+
       if (i >= currentPage - resultsPerPage && i < currentPage) {
          // list[i].style.backgroundColor = 'skyblue';
          list[i].style.display = '';
@@ -23,8 +40,8 @@ function showPage(list, page) {
    }
 }
 
-function appendPageLinks(studentList) {
-   const page = document.querySelector('.page');
+const appendPageLinks = (studentList) => {
+
    const div = document.createElement('div');
    div.className = 'pagination';
    page.appendChild(div);
@@ -52,7 +69,7 @@ function appendPageLinks(studentList) {
             allActive[i].className = '';
          }
 
-         //showPage function is called with orginal student list and page number returned from li > a.target.textContent
+         //showPage function is called with orginal studentList and page number returned from li > a.target.textContent
          showPage(studentList, page);
 
          //setting the class of the current a to active
@@ -70,3 +87,35 @@ showPage(studentList, 1);
 
 appendPageLinks(studentList);
 
+
+
+/*
+
+///// SEARCH BAR
+
+*/
+
+for (let n = 0; n < studentList.length; n++) {
+   searchArr.push(studentList[n]);
+
+}
+
+
+const div = document.createElement('div');
+const input = document.createElement('input');
+input.placeholder = 'Search for students...';
+const button = document.createElement('button');
+button.textContent = 'Search';
+div.className = 'student-search';
+div.appendChild(input);
+div.appendChild(button);
+headDiv.appendChild(div);
+button.addEventListener('click', (e) => {
+
+   if (e.target.tagName == 'BUTTON') {
+      if (e.target.textContent == 'Search') {
+         console.log(input.value);
+      }
+
+   }
+});
