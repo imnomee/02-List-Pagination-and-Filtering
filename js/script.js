@@ -31,6 +31,7 @@ function appendPageLinks(studentList) {
    const ul = document.createElement('ul');
    div.appendChild(ul);
 
+   //Generating number of li > a equal to number of pages
    for (let i = 1; i <= numOfPages; i++) {
       const li = document.createElement('li');
       const a = document.createElement('a');
@@ -39,13 +40,22 @@ function appendPageLinks(studentList) {
       li.appendChild(a);
       ul.appendChild(li);
 
+      //Click event listener on a so it only works when the link is clicked and new page is shown
       a.addEventListener('click', (e) => {
+
+         // page will get the number returned from the textConent and function accordingly
          const page = e.target.textContent;
+
+         //here we will get all the active links, if there are any and we will change the class to none so they are inactive
          const allActive = document.getElementsByClassName('active');
          for (let i = 0; i < allActive.length; i++) {
             allActive[i].className = '';
          }
+
+         //showPage function is called with orginal student list and page number returned from li > a.target.textContent
          showPage(studentList, page);
+
+         //setting the class of the current a to active
          e.target.className = 'active';
       });
    }
