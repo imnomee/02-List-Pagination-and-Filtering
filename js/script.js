@@ -5,15 +5,12 @@ FSJS project 2 - List Filter and Pagination
 
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
-const studentList = document.querySelectorAll('ul li');
-let searchArr = [];
+const studentList = document.querySelectorAll('ul li'); // Main student lists from html page
+const list2 = [...studentList]; // sample second list to try on both lists
 const resultsPerPage = 10; //results per page, we can change it any time to display different results
-const totalStudents = studentList.length; // total students
-const numOfPages = Math.ceil(totalStudents / resultsPerPage); //total number of pages it will generate
 
 const page = document.querySelector('.page');
 const headDiv = page.firstElementChild;
-
 
 const showPage = (list, page) => {
    let currentPage = (page * resultsPerPage);
@@ -40,7 +37,9 @@ const showPage = (list, page) => {
    }
 }
 
-const appendPageLinks = (studentList) => {
+const appendPageLinks = (list) => {
+   const totalStudents = list.length; // total students
+   const numOfPages = Math.ceil(totalStudents / resultsPerPage); //total number of pages it will generate
 
    const div = document.createElement('div');
    div.className = 'pagination';
@@ -70,7 +69,7 @@ const appendPageLinks = (studentList) => {
          }
 
          //showPage function is called with orginal studentList and page number returned from li > a.target.textContent
-         showPage(studentList, page);
+         showPage(list, page);
 
          //setting the class of the current a to active
          e.target.className = 'active';
@@ -82,40 +81,55 @@ const appendPageLinks = (studentList) => {
    listItems.className = 'active';
 }
 
-//Running showpage function with page number one by default. So it starts always with page 1
-showPage(studentList, 1);
-
-appendPageLinks(studentList);
-
-
-
 /*
-
-///// SEARCH BAR
-
+SEARCH BAR
 */
 
-for (let n = 0; n < studentList.length; n++) {
-   searchArr.push(studentList[n]);
+const searchButton = (list) => {
 
+   const div = document.createElement('div');
+   const input = document.createElement('input');
+   input.placeholder = 'Search for students...';
+   const button = document.createElement('button');
+   button.textContent = 'Search';
+   div.className = 'student-search';
+   div.appendChild(input);
+   div.appendChild(button);
+   headDiv.appendChild(div);
+   button.addEventListener('click', (e) => {
+
+      if (e.target.tagName == 'BUTTON') {
+         if (e.target.textContent == 'Search') {
+
+            for (let i = 0; i < list.length; i++) {
+
+               /* Getting text contact of list using traversal.
+               I can use the class name here for student list and student item
+               but used this approach just or practice and to see if it will work
+               */
+
+               const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
+               const pagination = document.querySelector('.pagination');
+               // const h1 = document.createElement('h1');
+               // h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
+               // page.appendChild(h1);
+
+               if (name === input.value.toLowerCase()) {
+
+                  list[i].style.display = '';
+
+               } else {
+                  list[i].style.display = 'none';
+                  pagination.style.display = 'none';
+               }
+
+            }
+         }
+
+      }
+   });
 }
 
-
-const div = document.createElement('div');
-const input = document.createElement('input');
-input.placeholder = 'Search for students...';
-const button = document.createElement('button');
-button.textContent = 'Search';
-div.className = 'student-search';
-div.appendChild(input);
-div.appendChild(button);
-headDiv.appendChild(div);
-button.addEventListener('click', (e) => {
-
-   if (e.target.tagName == 'BUTTON') {
-      if (e.target.textContent == 'Search') {
-         console.log(input.value);
-      }
-
-   }
-});
+showPage(list2, 1);
+appendPageLinks(list2);
+searchButton(list2);
