@@ -99,12 +99,11 @@ const searchButton = (list) => {
 
    const pagination = document.querySelector('.pagination');
 
-   const ul = document.querySelector('.student-list');
+   //Heading that is displayed with results
    const h1 = document.createElement('h1');
-
-   h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
+   // h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
+   h1.textContent = '';
    page.insertBefore(h1, pagination);
-   h1.style.display = 'none';
 
 
    button.addEventListener('click', (e) => {
@@ -112,25 +111,26 @@ const searchButton = (list) => {
       if (e.target.tagName == 'BUTTON') {
          if (e.target.textContent == 'Search') {
 
-            for (let i = 0; i < list.length; i++) {
 
 
-               /* Getting text contact of list using traversal.
-               I can use the class name here for student list and student item
-               but used this approach just or practice and to see if it will work
-               */
 
-               const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
+            /* Getting text contact of list using traversal.
+            I can use the class name here for student list and student item
+            but used this approach just or practice and to see if it will work
+            */
 
-               if (input.value.length > 0) {
-                  if (input.value.toLowerCase() == name) {
-                     h1.style.display = 'none';
-                     list[i].style.display = '';
-                  }
-                  else if (input.value.toLowerCase() != name) {
-                     h1.style.display = '';
+
+
+            if (input.value.length > 0) {
+               for (let i = 0; i < list.length; i++) {
+                  const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
+                  if (input.value.toLowerCase() != name) {
+                     h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
                      list[i].style.display = 'none';
                      pagination.style.display = 'none';
+                  } else if (input.value.toLowerCase() == name) {
+                     list[i].style.display = '';
+                     h1.textContent = 'NO MORE RESULTS FOUND..';
                   }
                }
             }
