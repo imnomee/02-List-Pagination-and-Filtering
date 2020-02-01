@@ -6,7 +6,7 @@ FSJS project 2 - List Filter and Pagination
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 const studentList = document.querySelectorAll('ul li'); // Main student lists from html page
-const list2 = [...studentList]; // sample second list to try on both lists
+
 const resultsPerPage = 10; //results per page, we can change it any time to display different results
 
 const page = document.querySelector('.page');
@@ -85,54 +85,48 @@ const appendPageLinks = (list) => {
 SEARCH BAR
 */
 
-const searchButton = (list) => {
+// const searchButton = (list) => {
 
-   const div = document.createElement('div');
-   const input = document.createElement('input');
-   input.placeholder = 'Search for students...';
-   const button = document.createElement('button');
-   button.textContent = 'Search';
-   div.className = 'student-search';
-   div.appendChild(input);
-   div.appendChild(button);
-   headDiv.appendChild(div);
+//    const div = document.createElement('div');
+//    const input = document.createElement('input');
+//    input.placeholder = 'Search for students...';
+//    const button = document.createElement('button');
+//    button.textContent = 'Search';
+//    div.className = 'student-search';
+//    div.appendChild(input);
+//    div.appendChild(button);
+//    headDiv.appendChild(div);
 
-   const ul = document.querySelector('.student-list');
-   const li = document.createElement('li');
+//    button.addEventListener('click', (e) => {
 
-   li.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
-   ul.appendChild(li);
-   li.style.display = 'none';
+//       if (e.target.tagName == 'BUTTON') {
+//          if (e.target.textContent == 'Search') {
+//             const searchArr = []; // sample second list to try on both lists
+//             for (let i = 0; i < list.length; i++) {
 
-   button.addEventListener('click', (e) => {
+//                //    /* Getting text contact of list using traversal.
+//                //    I can use the class name here for student list and student item
+//                //    but used this approach just or practice and to see if it will work
+//                //    */
+//                const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
+//                if (input.value.length > 0) {
+//                   searchArr = [];
+//                   if (name == input.value.toLowerCase()) {
+//                      searchArr.push(list[i]);
+//                   }
+//                }
+//             }
 
-      if (e.target.tagName == 'BUTTON') {
-         if (e.target.textContent == 'Search') {
-            for (let i = 0; i < list.length; i++) {
+//             // for (let i = 0; i < 19; i++) {
+//             //    searchArr.push(list[i]);
+//             // }
+//             showPage(searchArr, 1);
+//             appendPageLinks(searchArr);
+//          }
+//       }
+//    });
+// }
 
-               /* Getting text contact of list using traversal.
-               I can use the class name here for student list and student item
-               but used this approach just or practice and to see if it will work
-               */
-
-               const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
-               const pagination = document.querySelector('.pagination');
-
-               if (input.value.length > 0) {
-                  if (name == input.value.toLowerCase()) {
-                     list[i].style.display = '';
-                  }
-                  if (name != input.value.toLowerCase()) {
-                     list[i].style.display = 'none';
-                     pagination.style.display = 'none';
-                  }
-               }
-            }
-         }
-      }
-   });
-}
-
-showPage(list2, 1);
-appendPageLinks(list2);
-searchButton(list2);
+showPage(studentList, 1);
+appendPageLinks(studentList);
+// searchButton(studentList);
