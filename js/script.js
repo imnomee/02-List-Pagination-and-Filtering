@@ -132,11 +132,6 @@ const searchButton = (list) => {
                      list[i].style.display = 'none';
                      pagination.style.display = 'none';
                   }
-                  // if (name == input.value.toLowerCase()) {
-                  //    h1.style.display = 'none';
-                  //    list[i].style.display = '';
-                  // }
-
                }
             }
          }
