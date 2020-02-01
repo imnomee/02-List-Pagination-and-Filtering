@@ -96,11 +96,18 @@ const searchButton = (list) => {
    div.appendChild(input);
    div.appendChild(button);
    headDiv.appendChild(div);
+
+   const ul = document.querySelector('.student-list');
+   const li = document.createElement('li');
+
+   li.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
+   ul.appendChild(li);
+   li.style.display = 'none';
+
    button.addEventListener('click', (e) => {
 
       if (e.target.tagName == 'BUTTON') {
          if (e.target.textContent == 'Search') {
-
             for (let i = 0; i < list.length; i++) {
 
                /* Getting text contact of list using traversal.
@@ -110,22 +117,18 @@ const searchButton = (list) => {
 
                const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
                const pagination = document.querySelector('.pagination');
-               // const h1 = document.createElement('h1');
-               // h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
-               // page.appendChild(h1);
 
-               if (name === input.value.toLowerCase()) {
-
-                  list[i].style.display = '';
-
-               } else {
-                  list[i].style.display = 'none';
-                  pagination.style.display = 'none';
+               if (input.value.length > 0) {
+                  if (name == input.value.toLowerCase()) {
+                     list[i].style.display = '';
+                  }
+                  if (name != input.value.toLowerCase()) {
+                     list[i].style.display = 'none';
+                     pagination.style.display = 'none';
+                  }
                }
-
             }
          }
-
       }
    });
 }
