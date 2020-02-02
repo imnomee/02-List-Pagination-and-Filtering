@@ -6,7 +6,7 @@ FSJS project 2 - List Filter and Pagination
 // Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
 
 const studentList = document.querySelectorAll('ul li'); // Main student lists from html page
-const list2 = [...studentList]; // sample second list to try on both lists
+
 const resultsPerPage = 10; //results per page, we can change it any time to display different results
 
 const page = document.querySelector('.page');
@@ -79,6 +79,7 @@ const appendPageLinks = (list) => {
    //Getting all the generated List > a items and setting first link class to 'active'
    const listItems = ul.querySelectorAll('li a')[0];
    listItems.className = 'active';
+
 }
 
 /*
@@ -98,47 +99,59 @@ const searchButton = (list) => {
    headDiv.appendChild(div);
 
    const pagination = document.querySelector('.pagination');
-
-   //Heading that is displayed with results
    const h1 = document.createElement('h1');
-   // h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
    h1.textContent = '';
    page.insertBefore(h1, pagination);
-
 
    button.addEventListener('click', (e) => {
 
       if (e.target.tagName == 'BUTTON') {
-         if (e.target.textContent == 'Search') {
+         /* Getting text contact of list using traversal.
+         I can use the class name here for student list and student item
+         but used this approach just or practice and to see if it will work
+         */
+         const searchInput = input.value;
+         const searchArr = []; // sample second list to try on both lists
+         if (searchInput.length > 0) {
+            searchArr.length = 0;
+            h1.textContent = '';
+            pagination.style.display = 'none';
 
+            for (let i = 0; i < list.length; i++) {
+               const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
+               list[i].style.display = 'none';
 
-
-
-            /* Getting text contact of list using traversal.
-            I can use the class name here for student list and student item
-            but used this approach just or practice and to see if it will work
-            */
-
-
-
-            if (input.value.length > 0) {
-               for (let i = 0; i < list.length; i++) {
-                  const name = list[i].firstElementChild.firstElementChild.nextElementSibling.textContent;
-                  if (input.value.toLowerCase() != name) {
-                     h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
-                     list[i].style.display = 'none';
-                     pagination.style.display = 'none';
-                  } else if (input.value.toLowerCase() == name) {
-                     list[i].style.display = '';
-                     h1.textContent = 'NO MORE RESULTS FOUND..';
-                  }
+               if (name.toLowerCase().includes(searchInput.toLowerCase())) {
+                  searchArr.push(list[i]);
                }
+               input.value = '';
             }
+         }
+         if (searchArr.length == 0) {
+            h1.textContent = 'NO RECORDS FOUND, PLEASE SEARCH AGAIN OR REFRESH FOR FULL LIST.';
+
+         } else {
+            /*
+            This will create a new pagination element for search results and
+            we will remove it every time a search is conducted
+
+            IF YOU COMMENT OUT THESE NEXT TWO LINES FOR " searchPagination" YOU WILL SEE THE BUG, WHICH SHOWS MORE PAGINATIONS
+            ON EVERY SEARCH TERM, I WOULD APPRECIATE IF YOU CAN PLEASE GUIDE ME WITH SOME BETTER APPROACH.
+            THATS THE BEST I COULD COME UP WITH. 
+
+            */
+            const searchPagination = page.lastElementChild;
+            page.removeChild(searchPagination);
+
+            //show page and append links with searchArray we received from result
+            showPage(searchArr, 1);
+            appendPageLinks(searchArr);
          }
       }
    });
 }
 
-showPage(list2, 1);
-appendPageLinks(list2);
-searchButton(list2);
+showPage(studentList, 1);
+appendPageLinks(studentList);
+searchButton(studentList);
+
