@@ -110,7 +110,7 @@ const searchButton = (list) => {
          I can use the class name here for student list and student item
          but used this approach just or practice and to see if it will work
          */
-         const searchInput = input.value;
+         const searchInput = input.value.trim();
          const searchArr = []; // sample second list to try on both lists
          if (searchInput.length > 0) {
             searchArr.length = 0;
