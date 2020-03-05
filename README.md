@@ -8,5 +8,3 @@ When user will clicks the navigation links it will display next entries, 10 at a
 
 After completing the first task, we have added an optional task of adding working unobstrusive Javascript.
 You can search student names with Full or Partial name search. It will update the navigation links according to the results we receive from the search. 
-
-As of now, this project with complete with some minor bugs
